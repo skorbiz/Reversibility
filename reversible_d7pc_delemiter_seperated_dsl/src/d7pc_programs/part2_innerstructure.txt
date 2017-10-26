@@ -1,0 +1,65 @@
+prepare feeder : innerStructure
+restart_point
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INNERSTRUCTURE
+
+local state : state
+set state : state Q_IIWA
+set state : state wc.outershellAltColModelFrame wc.assemblyFrame
+
+set grasp_type : innerStructure
+set vision_type : innerStructure
+set inspection_type : innerStructure
+
+moveq : wc.qDispenser wc.qDispenser state
+wsg open
+set state: state wc.innerStructureFrame wc.innerStructureDetachFrame
+pick feeder : state
+set state: state wc.innerStructureFrame wc.innerStructureGraspFrame
+set state : state Q_IIWA
+
+set state : state wc.qDispenser
+moveq : wc.qDispenser wc.qInspectInnerStructure state
+set state : state wc.qInspectInnerStructure
+prepare feeder : innerStructure
+inspection update
+
+local transform : toolTobject
+local transform : baseTtoolAssemblyRetracted
+local transform : baseTtoolAssembly
+set transform : toolTobject inspection.toolTobject
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.innerStructureAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.innerStructureAssemblyFrame state
+
+set state : state Q_IIWA
+local move : move4
+move in_reach : move4 baseTtoolAssemblyRetracted state
+set state : state move4
+move lin in_reach : baseTtoolAssembly state
+
+set state : state Q_IIWA
+move : move4 baseTtoolAssemblyRetracted state
+set state : state wc.qInspectInnerStructure
+set state : state Q_IIWA
+
+innerstructure skill : toolTobject baseTtoolAssemblyRetracted state
+//wsg test in_hand :
+wsg open :
+move lin : baseTtoolAssembly baseTtoolAssemblyRetracted
+
+
+//Initialisation of reverse vars
+set state : state Q_IIWA
+set state : state wc.outershellAltColModelFrame wc.assemblyFrame
+set state: state wc.innerStructureFrame wc.innerStructureGraspFrame
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.innerStructureAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.innerStructureAssemblyFrame state
+delocal transform : baseTtoolAssemblyRetracted default
+delocal transform : baseTtoolAssembly default
+delocal transform : toolTobject inspection.default_toolTobject
+delocal state : state
+delocal move : move4
+
+set grasp_type : innerStructure
+set vision_type : innerStructure
+set inspection_type : innerStructure

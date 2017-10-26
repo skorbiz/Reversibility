@@ -1,0 +1,35 @@
+<Q name="Home"> 0.743 -1.646 1.909 -1.842 -1.561 -3.968 </Q>
+<Q name="test"> 0.123 </Q>
+
+<IOPort name="machine"> 4 </IOport>
+<IOPort name="screwdriver_activate"> 5 </IOPort>
+
+<sequence name = "nested">
+	<wait test="">1.4</wait>
+	<print>Hello world print </print>
+	<io>
+		<port>machine</port>
+		<switch>on</switch> 
+	</io>
+	<move> Home </move>
+	<forceMode>
+		<fma_forward>fma_up</fma_forward>>
+		<fma_backward>fma_down</fma_backward>
+	</forceMode>
+</sequence>
+
+<sequence name = "test2">
+	<print>test</print>
+</sequence>
+
+<sequence name = "main" neverReversible="TRUE" reverseWith="test2">
+	<move> Home </move>
+	<call> nested </call>
+	<grasp>open</grasp>
+	<grasp>close</grasp>
+	<grasp>153</grasp>
+	<wait> 0.5 </wait>
+	<move> Home </move>
+	<move> Home </move>
+	<move> Home </move>
+</sequence>

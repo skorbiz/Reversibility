@@ -1,0 +1,4 @@
+<launch>
+<node pkg="sdu_magic" name="sdu_magic" type="sdu_magic" launch-prefix="valgrind">
+</node>
+</launch>

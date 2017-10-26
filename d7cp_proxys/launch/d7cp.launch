@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="sick_pim60"  pkg="sick_pim60" type="sick_pim60_node.py">  </node>
+  <node name="d7pc_2d_inspection"  pkg="d7pc_2d_inspection" type="d7pc_2d_inspection_node.py">  </node>
+  <include file="$(find wsg_50_driver)/launch/wsg_50_tcp.launch" />
+  <include file="$(find vision_server)/launch/vision_server.launch"/>
+  <include file="$(find iiwa_driver)/launch/start.launch" />
+</launch>
+
+

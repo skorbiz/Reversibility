@@ -1,0 +1,60 @@
+prepare feeder : screwPart
+restart_point
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SPRING
+
+set grasp_type : spring 
+
+local state : state
+set state : state Q_IIWA 
+set state : state wc.innerStructureAltColModelFrame wc.assemblyFrame
+
+wsg open
+moveq : wc.qZero wc.qSpringPickInit state
+move ptp : wc.qSpringPickInit wc.qSpringPickPath1
+move ptp : wc.qSpringPickPath1 wc.qSpringPickPath2
+wsg close
+move ptp : wc.qSpringPickPath2 wc.qSpringPickInit
+
+set state : state Q_IIWA
+set state : state wc.springFrame wc.springGraspFrame
+
+moveq : wc.qSpringPickInit wc.qAssemblySpringIntermediet state
+set state : state Q_IIWA
+
+local transform : toolTobject
+local transform : baseTtoolAssemblyRetracted
+local transform : baseTtoolAssembly
+
+convert frame2frame : toolTobject wc.toolFrame  wc.springGraspFrame state
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.springAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.springAssemblyFrame state
+
+local move : move1
+move in_reach : move1 baseTtoolAssemblyRetracted state
+
+set state : state move1
+move lin in_reach : baseTtoolAssembly state
+
+move : move1 baseTtoolAssemblyRetracted state
+set state : state wc.qSpringPickInit
+set state : state Q_IIWA
+move lin : baseTtoolAssemblyRetracted baseTtoolAssembly
+wsg open :
+move lin : baseTtoolAssembly baseTtoolAssemblyRetracted
+
+
+//Initialisation of reverse vars
+set state : state Q_IIWA
+set state : state wc.innerStructureAltColModelFrame wc.assemblyFrame
+set state: state wc.springFrame wc.springGraspFrame
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.springAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.springAssemblyFrame state
+convert frame2frame : toolTobject wc.toolFrame  wc.springGraspFrame state
+delocal transform : baseTtoolAssemblyRetracted default
+delocal transform : baseTtoolAssembly default
+delocal transform : toolTobject default
+delocal state : state
+delocal move : move1
+
+set grasp_type : spring

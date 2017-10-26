@@ -1,0 +1,172 @@
+digraph graphname {
+"0x26cf228"[label = "LIST_COMBINATOR
+",];
+"0x26cf228" -> "0x26cbf58" ;
+"0x26cf228" -> "0x26ce538" ;
+"0x26cbf58"[label = "lFRAMES
+",];
+"0x26cbf58" -> "0x26cbef8" ;
+"0x26cbef8"[label = "AT_FRAMES
+",];
+"0x26cbef8" -> "0x26cc578" ;
+"0x26cc578"[label = "TT_IDENTIFIER
+test",];
+"0x26ce538"[label = "TT_SEQUENCE
+",];
+"0x26ce538" -> "0x26cc148" ;
+"0x26ce538" -> "0x26ce2c8" ;
+"0x26cc148"[label = "TT_IDENTIFIER
+main",];
+"0x26ce2c8"[label = "AT_INSTRUCTION_LIST
+",];
+"0x26ce2c8" -> "0x26ce5f8" ;
+"0x26ce2c8" -> "0x26d0cc8" ;
+"0x26ce2c8" -> "0x26d0be8" ;
+"0x26ce2c8" -> "0x26cef48" ;
+"0x26ce2c8" -> "0x26ca9b8" ;
+"0x26ce2c8" -> "0x26cdeb8" ;
+"0x26ce2c8" -> "0x26ce878" ;
+"0x26ce2c8" -> "0x26d02c8" ;
+"0x26ce2c8" -> "0x26ccde8" ;
+"0x26ce5f8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x26ce5f8" -> "0x26cbd58" ;
+"0x26ce5f8" -> "0x26cbe78" ;
+"0x26ce5f8" -> "0x26ce658" ;
+"0x26ce5f8" -> "0x26cf328" ;
+"0x26ce5f8" -> "0x26cd978" ;
+"0x26cbd58"[label = "TT_LOCAL
+local",];
+"0x26cbe78"[label = "TT_IDENTIFIER
+string",];
+"0x26ce658"[label = "TT_IDENTIFIER
+s",];
+"0x26cf328"[label = "TT_EQUAL
+= ",];
+"0x26cd978"[label = "ARG
+",];
+"0x26cd978" -> "0x26d0de8" ;
+"0x26d0de8"[label = "TT_STRING
+lalalprint text",];
+"0x26d0cc8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x26d0cc8" -> "0x26ce598" ;
+"0x26d0cc8" -> "0x26d0a48" ;
+"0x26d0cc8" -> "0x26d0c68" ;
+"0x26d0cc8" -> "0x26d03c8" ;
+"0x26ce598"[label = "TT_IDENTIFIER
+print",];
+"0x26d0a48"[label = "TT_LEFT
+(",];
+"0x26d0c68"[label = "ARG
+",];
+"0x26d0c68" -> "0x26cf8d8" ;
+"0x26cf8d8"[label = "TT_IDENTIFIER
+s",];
+"0x26d03c8"[label = "TT_RIGHT
+)",];
+"0x26d0be8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x26d0be8" -> "0x26d0b88" ;
+"0x26d0be8" -> "0x26cf088" ;
+"0x26d0be8" -> "0x26cf1c8" ;
+"0x26d0b88"[label = "TT_IDENTIFIER
+s",];
+"0x26cf088"[label = "TT_EQUAL
+= ",];
+"0x26cf1c8"[label = "ARG
+",];
+"0x26cf1c8" -> "0x26cba58" ;
+"0x26cba58"[label = "TT_STRING
+pewpew",];
+"0x26cef48"[label = "SEQUENCE_COMBINATOR
+",];
+"0x26cef48" -> "0x26cf7e8" ;
+"0x26cef48" -> "0x26d0888" ;
+"0x26cef48" -> "0x26d0938" ;
+"0x26cef48" -> "0x26d1a28" ;
+"0x26cf7e8"[label = "TT_IDENTIFIER
+print",];
+"0x26d0888"[label = "TT_LEFT
+(",];
+"0x26d0938"[label = "ARG
+",];
+"0x26d0938" -> "0x26ce4c8" ;
+"0x26ce4c8"[label = "TT_IDENTIFIER
+s",];
+"0x26d1a28"[label = "TT_RIGHT
+)",];
+"0x26ca9b8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x26ca9b8" -> "0x26d15f8" ;
+"0x26ca9b8" -> "0x26d0218" ;
+"0x26ca9b8" -> "0x26cb798" ;
+"0x26ca9b8" -> "0x26cd318" ;
+"0x26d15f8"[label = "TT_IDENTIFIER
+print",];
+"0x26d0218"[label = "TT_LEFT
+(",];
+"0x26cb798"[label = "ARG
+",];
+"0x26cb798" -> "0x26d0198" ;
+"0x26d0198"[label = "TT_STRING
+abcdef",];
+"0x26cd318"[label = "TT_RIGHT
+)",];
+"0x26cdeb8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x26cdeb8" -> "0x26d0aa8" ;
+"0x26cdeb8" -> "0x26ca928" ;
+"0x26cdeb8" -> "0x26d1938" ;
+"0x26cdeb8" -> "0x26cd018" ;
+"0x26d0aa8"[label = "TT_IDENTIFIER
+prepare_feeder",];
+"0x26ca928"[label = "TT_LEFT
+(",];
+"0x26d1938"[label = "ARG
+",];
+"0x26d1938" -> "0x26ce418" ;
+"0x26ce418"[label = "TT_STRING
+outerShell",];
+"0x26cd018"[label = "TT_RIGHT
+)",];
+"0x26ce878"[label = "SEQUENCE_COMBINATOR
+",];
+"0x26ce878" -> "0x26d18d8" ;
+"0x26ce878" -> "0x26d1878" ;
+"0x26ce878" -> "0x26ca8c8" ;
+"0x26d18d8"[label = "TT_IDENTIFIER
+restart_point",];
+"0x26d1878"[label = "TT_LEFT
+(",];
+"0x26ca8c8"[label = "TT_RIGHT
+)",];
+"0x26d02c8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x26d02c8" -> "0x26ca868" ;
+"0x26d02c8" -> "0x26cac58" ;
+"0x26d02c8" -> "0x26ccba8" ;
+"0x26ca868"[label = "TT_LOCAL
+local",];
+"0x26cac58"[label = "TT_IDENTIFIER
+State",];
+"0x26ccba8"[label = "TT_IDENTIFIER
+state",];
+"0x26ccde8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x26ccde8" -> "0x26cc9f8" ;
+"0x26ccde8" -> "0x26cde08" ;
+"0x26ccde8" -> "0x26ce788" ;
+"0x26ccde8" -> "0x26ce728" ;
+"0x26cc9f8"[label = "TT_IDENTIFIER
+state",];
+"0x26cde08"[label = "TT_COLON
+:",];
+"0x26ce788"[label = "TT_EQUAL
+= ",];
+"0x26ce728"[label = "ARG
+",];
+"0x26ce728" -> "0x26cda68" ;
+"0x26cda68"[label = "TT_IDENTIFIER
+Q_IIWA",];
+ }

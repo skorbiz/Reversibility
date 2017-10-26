@@ -1,0 +1,5 @@
+
+
+catkin_make tests --pkg reversible_assembly
+catkin_make tests
+rosrun reversible_assembly reversible_assembly-test 

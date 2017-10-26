@@ -1,0 +1,4 @@
+<launch>
+<node pkg="sdu_hw_interface_sim" 	name="sdu_hw_interface_sim" 	type="sdu_hw_interface_sim"></node>
+<node pkg="sdu_visualization" 		name="sdu_visualization" 		type="start_robwork_studio"></node>
+</launch>

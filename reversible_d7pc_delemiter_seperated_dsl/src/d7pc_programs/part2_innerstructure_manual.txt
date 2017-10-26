@@ -1,0 +1,89 @@
+restart_point
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//INNERSTRUCTURE MANUAL PICK
+
+local state : state
+set state : state Q_IIWA
+set state : state wc.outershellAltColModelFrame wc.assemblyFrame
+
+set grasp_type : innerStructure
+set vision_type : innerStructure
+set inspection_type : innerStructure
+
+
+local move : move1
+local transform : baseTpick
+local transform : baseTpickRetracted
+convert frame2frame : baseTpick wc.baseFrame wc.innerStructureFixedPickTcpFrame state
+convert frame2frame : baseTpickRetracted wc.baseFrame wc.innerStructureFixedPickRetractedTcpFrame state
+
+moveq : wc.qPickRetractedInnerstrucutre wc.qPickRetractedInnerstrucutre state
+set state : state wc.qPickRetractedInnerstrucutre
+
+move in_reach : move1 baseTpickRetracted state
+set state : state move1
+move lin in_reach : baseTpick state
+
+set state : state Q_IIWA
+move : move1 baseTpickRetracted state
+set state : state  wc.qPickRetractedInnerstrucutre
+set state : state Q_IIWA
+
+move lin : baseTpickRetracted baseTpick
+wsg close :
+move lin : baseTpick baseTpickRetracted
+
+convert frame2frame : baseTpickRetracted wc.baseFrame wc.innerStructureFixedPickRetractedTcpFrame state
+convert frame2frame : baseTpick wc.baseFrame wc.innerStructureFixedPickTcpFrame state
+delocal transform : baseTpickRetracted default
+delocal transform : baseTpick default
+delocal move : move1
+
+set state: state wc.innerStructureFrame wc.innerStructureDetachFrame
+set state: state wc.innerStructureFrame wc.innerStructureGraspFrame
+set state : state Q_IIWA
+
+moveq : wc.qPickRetractedInnerstrucutre wc.qInspectInnerStructure state
+set state : state wc.qInspectInnerStructure
+inspection update
+
+
+local transform : toolTobject
+set transform : toolTobject inspection.toolTobject
+local transform : baseTtoolAssemblyRetracted
+local transform : baseTtoolAssembly
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.innerStructureAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.innerStructureAssemblyFrame state
+
+set state : state Q_IIWA
+local move : move4
+move in_reach : move4 baseTtoolAssemblyRetracted state
+set state : state move4
+move lin in_reach : baseTtoolAssembly state
+
+set state : state Q_IIWA
+move : move4 baseTtoolAssemblyRetracted state
+set state : state wc.qInspectInnerStructure
+set state : state Q_IIWA
+
+innerstructure skill : toolTobject baseTtoolAssemblyRetracted state
+wsg test in_hand :
+wsg open :
+move lin : baseTtoolAssembly baseTtoolAssemblyRetracted
+
+
+//Initialisation of reverse vars
+set state : state Q_IIWA
+set state : state wc.outershellAltColModelFrame wc.assemblyFrame
+set state: state wc.innerStructureFrame wc.innerStructureGraspFrame
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.innerStructureAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.innerStructureAssemblyFrame state
+delocal transform : baseTtoolAssemblyRetracted default
+delocal transform : baseTtoolAssembly default
+delocal transform : toolTobject inspection.default_toolTobject
+delocal state : state
+delocal move : move4
+
+set grasp_type : innerStructure
+set vision_type : innerStructure
+set inspection_type : innerStructure

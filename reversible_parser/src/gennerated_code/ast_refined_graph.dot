@@ -1,0 +1,178 @@
+digraph graphname {
+"0x1244dc8"[label = "LIST_COMBINATOR
+",];
+"0x1244dc8" -> "0x1242568" ;
+"0x1244dc8" -> "0x12420c8" ;
+"0x1242568"[label = "lFRAMES
+",];
+"0x1242568" -> "0x12424f8" ;
+"0x12424f8"[label = "AT_FRAMES
+",];
+"0x12424f8" -> "0x1242b78" ;
+"0x1242b78"[label = "TT_IDENTIFIER
+test",];
+"0x12420c8"[label = "TT_SEQUENCE
+",];
+"0x12420c8" -> "0x12427e8" ;
+"0x12420c8" -> "0x1244818" ;
+"0x12427e8"[label = "TT_IDENTIFIER
+main",];
+"0x1244818"[label = "AT_INSTRUCTION_LIST
+",];
+"0x1244818" -> "0x1243d38" ;
+"0x1244818" -> "0x12455e8" ;
+"0x1244818" -> "0x1243c98" ;
+"0x1244818" -> "0x1245438" ;
+"0x1244818" -> "0x12453c8" ;
+"0x1244818" -> "0x1243ba8" ;
+"0x1244818" -> "0x12409b8" ;
+"0x1244818" -> "0x1240a98" ;
+"0x1244818" -> "0x1244238" ;
+"0x1243d38"[label = "SEQUENCE_COMBINATOR
+",];
+"0x1243d38" -> "0x12423c8" ;
+"0x1243d38" -> "0x12445a8" ;
+"0x1243d38" -> "0x1243fe8" ;
+"0x1243d38" -> "0x1243e68" ;
+"0x1243d38" -> "0x1244478" ;
+"0x12423c8"[label = "TT_LOCAL
+local",];
+"0x12445a8"[label = "TT_IDENTIFIER
+string",];
+"0x1243fe8"[label = "TT_IDENTIFIER
+s",];
+"0x1243e68"[label = "TT_EQUAL
+= ",];
+"0x1244478"[label = "AT_ARGUMENT
+",];
+"0x1244478" -> "0x1243ed8" ;
+"0x1243ed8"[label = "TT_STRING
+lalalprint text",];
+"0x12455e8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x12455e8" -> "0x1244538" ;
+"0x12455e8" -> "0x12440c8" ;
+"0x1244538"[label = "TT_IDENTIFIER
+print",];
+"0x12440c8"[label = "AT_ARGUMENT
+",];
+"0x12440c8" -> "0x12422a8" ;
+"0x12422a8"[label = "TT_IDENTIFIER
+s",];
+"0x1243c98"[label = "SEQUENCE_COMBINATOR
+",];
+"0x1243c98" -> "0x12454e8" ;
+"0x1243c98" -> "0x12430d8" ;
+"0x1243c98" -> "0x1241b38" ;
+"0x12454e8"[label = "TT_IDENTIFIER
+s",];
+"0x12430d8"[label = "TT_EQUAL
+= ",];
+"0x1241b38"[label = "AT_ARGUMENT
+",];
+"0x1241b38" -> "0x1241ac8" ;
+"0x1241ac8"[label = "TT_STRING
+pewpew",];
+"0x1245438"[label = "SEQUENCE_COMBINATOR
+",];
+"0x1245438" -> "0x12421e8" ;
+"0x1245438" -> "0x1243ac8" ;
+"0x12421e8"[label = "TT_IDENTIFIER
+print",];
+"0x1243ac8"[label = "AT_ARGUMENT
+",];
+"0x1243ac8" -> "0x1243048" ;
+"0x1243048"[label = "TT_IDENTIFIER
+s",];
+"0x12453c8"[label = "AT_INSTRUCTION_LIST
+",];
+"0x12453c8" -> "0x1245da8" ;
+"0x12453c8" -> "0x1240fd8" ;
+"0x1245da8"[label = "AT_INSTRUCTION
+",];
+"0x1245da8" -> "0x1241828" ;
+"0x1245da8" -> "0x1242858" ;
+"0x1245da8" -> "0x1243a58" ;
+"0x1245da8" -> "0x1241ee8" ;
+"0x1245da8" -> "0x1245578" ;
+"0x1241828"[label = "TT_LOCAL
+local",];
+"0x1242858"[label = "TT_IDENTIFIER
+string",];
+"0x1243a58"[label = "TT_IDENTIFIER
+my_random_identifier",];
+"0x1241ee8"[label = "TT_EQUAL
+",];
+"0x1245578"[label = "AT_ARGUMENT
+",];
+"0x1245578" -> "0x1237948" ;
+"0x1237948"[label = "TT_IDENTIFIER
+abcdef",];
+"0x1240fd8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x1240fd8" -> "0x1243b38" ;
+"0x1240fd8" -> "0x1242048" ;
+"0x1243b38"[label = "TT_IDENTIFIER
+print",];
+"0x1242048"[label = "AT_ARGUMENT
+",];
+"0x1242048" -> "0x1241dc8" ;
+"0x1241dc8"[label = "TT_IDENTIFIER
+my_random_identifier",];
+"0x1243ba8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x1243ba8" -> "0x1241978" ;
+"0x1243ba8" -> "0x1242ec8" ;
+"0x1243ba8" -> "0x1247168" ;
+"0x1243ba8" -> "0x12470f8" ;
+"0x1241978"[label = "TT_IDENTIFIER
+prepare_feeder",];
+"0x1242ec8"[label = "TT_LEFT
+(",];
+"0x1247168"[label = "AT_ARGUMENT
+",];
+"0x1247168" -> "0x1247088" ;
+"0x1247088"[label = "TT_STRING
+outerShell",];
+"0x12470f8"[label = "TT_RIGHT
+)",];
+"0x12409b8"[label = "SEQUENCE_COMBINATOR
+",];
+"0x12409b8" -> "0x12471d8" ;
+"0x12409b8" -> "0x1242e58" ;
+"0x12409b8" -> "0x1242fa8" ;
+"0x12471d8"[label = "TT_IDENTIFIER
+restart_point",];
+"0x1242e58"[label = "TT_LEFT
+(",];
+"0x1242fa8"[label = "TT_RIGHT
+)",];
+"0x1240a98"[label = "SEQUENCE_COMBINATOR
+",];
+"0x1240a98" -> "0x12416c8" ;
+"0x1240a98" -> "0x1240a28" ;
+"0x1240a98" -> "0x1242f38" ;
+"0x12416c8"[label = "TT_LOCAL
+local",];
+"0x1240a28"[label = "TT_IDENTIFIER
+State",];
+"0x1242f38"[label = "TT_IDENTIFIER
+state",];
+"0x1244238"[label = "SEQUENCE_COMBINATOR
+",];
+"0x1244238" -> "0x12442c8" ;
+"0x1244238" -> "0x1242be8" ;
+"0x1244238" -> "0x12447a8" ;
+"0x1244238" -> "0x12432e8" ;
+"0x12442c8"[label = "TT_IDENTIFIER
+state",];
+"0x1242be8"[label = "TT_COLON
+:",];
+"0x12447a8"[label = "TT_EQUAL
+= ",];
+"0x12432e8"[label = "AT_ARGUMENT
+",];
+"0x12432e8" -> "0x1244e68" ;
+"0x1244e68"[label = "TT_IDENTIFIER
+Q_IIWA",];
+ }

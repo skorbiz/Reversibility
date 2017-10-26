@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="reversible_dsl" type="full_sequence" name="full_sequence" output="screen" launch-prefix="xterm -e gdb -d=/home/josl/Documents/catkin_ws/devel/lib/reversible_dsl -e=full_sequence">
+  </node>
+</launch>
+
+

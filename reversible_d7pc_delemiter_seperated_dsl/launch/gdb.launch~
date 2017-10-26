@@ -1,0 +1,11 @@
+
+<launch>
+<node name="reversible_assembly_node"
+    pkg="reversible_assembly" 
+    type="reversible_assembly_node"
+    respawn="false" output="screen" 
+    launch-prefix="gdb -ex run --args">
+</node>
+</launch>
+
+

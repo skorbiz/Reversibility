@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package>
+  <name>reversible_d7pc_model</name>
+  <version>0.0.1</version>
+  <description>The reversible_model package</description>
+
+  <maintainer email="josl@todo.todo">josl</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <run_depend>roscpp</run_depend>
+
+  <build_depend>roslib</build_depend>
+  <run_depend>roslib</run_depend>  
+
+  <run_depend>gtest</run_depend>
+  <build_depend>gtest</build_depend>
+
+  <build_depend>d7cp_proxys</build_depend>
+  <run_depend>d7cp_proxys</run_depend>
+
+  <build_depend>reversible_dsl</build_depend>
+  <run_depend>reversible_dsl</run_depend>
+  
+  <build_depend>d7pc_msgs</build_depend>
+  <run_depend>d7pc_msgs</run_depend>  
+
+  <build_depend>dsl_common</build_depend>
+  <run_depend>dsl_common</run_depend>    
+
+</package>

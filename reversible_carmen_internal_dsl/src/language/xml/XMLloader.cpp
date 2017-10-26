@@ -1,0 +1,340 @@
+/*
+ * XMLloader.cpp
+ *
+ *  Created on: Oct 19, 2015
+ *      Author: josl
+ */
+
+#include "XMLloader.hpp"
+
+#include <exception>
+#include <boost/foreach.hpp>
+
+#include <rw/common/DOMParser.hpp>
+#include <rw/loaders/dom/DOMBasisTypes.hpp>
+#include <../src/common/common.hpp>
+
+namespace dsl
+{
+
+const std::string XMLloader::sequenceID("sequence");
+const std::string XMLloader::callID("call");
+const std::string XMLloader::uncallID("uncall");
+
+const std::string XMLloader::reverseWithID("reverseWith");
+const std::string XMLloader::neverReversibleID("neverReversible");
+
+const std::string XMLloader::moveID("move");
+const std::string XMLloader::waitID("wait");
+const std::string XMLloader::ioID("io");
+const std::string XMLloader::printID("print");
+const std::string XMLloader::grapsID("grasp");
+const std::string XMLloader::forceModeID("forceMode");
+const std::string XMLloader::actionID("action");
+
+const std::string XMLloader::graspOpenID("open");
+const std::string XMLloader::graspCloseID("close");
+const std::string XMLloader::fmaForwardID("fma_forward");
+const std::string XMLloader::fmaBackwardID("fma_backward");
+const std::string XMLloader::switchOnID("on");
+const std::string XMLloader::switchOffID("off");
+
+const std::string XMLloader::nameID("name");
+const std::string XMLloader::ioPortID("IOPort");
+const std::string XMLloader::portID("port");
+const std::string XMLloader::switchID("switch");
+
+XMLloader::XMLloader()
+{
+	deb.setActivationDependency(dsl::debug::Debug::ActivationToggles::XMLloader);
+	deb.setPrefix("[XMLloader] ");
+	deb.setColorPrefix(dsl::color::BLUE);
+}
+
+XMLloader::~XMLloader()
+{
+}
+
+dsl::BaseProgram XMLloader::load()
+{
+	std::string xmlProgram = dsl::common::getPath2dsl() + "/programs/MapVola.xml";
+	std::string xmlSchema  = dsl::common::getPath2dsl() + "/language/xml/schema.xsd";
+	deb << "xmlProgram: " << xmlProgram << std::endl;
+	deb << "xmlschema:  " << xmlSchema << std::endl;
+	loadFile(xmlProgram, xmlSchema);
+	return _builder.getFinalProgram();
+}
+
+dsl::BaseProgram XMLloader::load(std::string filepath)
+{
+	loadFile(filepath);
+	return _builder.getFinalProgram();
+}
+
+void XMLloader::loadFile(const std::string& filename, const std::string& schemaFileName)
+{
+    rw::common::DOMParser::Ptr parser = rw::common::DOMParser::make();
+    parser->setSchema(schemaFileName);
+    parser->load(filename);
+    rw::common::DOMElem::Ptr root = parser->getRootElement();
+    loadProgram(root);
+}
+
+// **********************************
+// *** Root
+
+void XMLloader::loadProgram(rw::common::DOMElem::Ptr element)
+{
+	BOOST_FOREACH( rw::common::DOMElem::Ptr child, element->getChildren() )
+	{
+		if (child->isName(rw::loaders::DOMBasisTypes::idQ()))
+			loadQ(child);
+		else if (child->isName(XMLloader::ioPortID))
+			loadIOPorts(child);
+		else if (child->isName(XMLloader::sequenceID))
+			loadSequence(child);
+		else
+			std::cerr << "Parse Error: data value \"" << child->getName() << "\" not recognized" << std::endl;
+	}
+}
+
+// **********************************
+// *** Sequence
+
+void XMLloader::loadSequence(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::sequenceID);
+
+	std::string name = element->getAttributeValue(nameID);
+	_builder.sequence(name);
+	deb << "loaded sequence : " << name << std::endl;
+	loadFlowOverwrites(element);
+
+	BOOST_FOREACH( rw::common::DOMElem::Ptr child, element->getChildren() )
+	{
+		if (child->isName(callID))
+			loadCall(child);
+		else if (child->isName(uncallID))
+			loadUncall(child);
+		else if (child->isName(moveID))
+			loadMove(child);
+		else if (child->isName(grapsID))
+			loadGrasp(child);
+		else if (child->isName(waitID))
+			loadWait(child);
+		else if (child->isName(ioID))
+			loadIO(child);
+		else if (child->isName(printID))
+			loadPrint(child);
+		else if (child->isName(forceModeID))
+			loadForceMode(child);
+		else if (child->isName(actionID))
+			loadAction(child);
+		else
+			RW_THROW("Parse Error: data value \"" << child->getName() << "\" not recognized in a sequence");
+
+		loadFlowOverwrites(child);
+	}
+}
+
+// **********************************
+// *** Flow manipulations
+
+void XMLloader::loadCall(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::callID);
+	std::string arg = element->getValue();
+	_builder.call(arg);
+	deb << " loaded Call : " << arg << std::endl;
+}
+
+void XMLloader::loadUncall(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::uncallID);
+	std::string arg = element->getValue();
+	_builder.uncall(arg);
+	deb << " loaded Uncall : " << arg << std::endl;
+}
+
+void XMLloader::loadFlowOverwrites(rw::common::DOMElem::Ptr element)
+{
+	if( element->hasAttribute( XMLloader::neverReversibleID ) )
+		loadAttributeReversible( element->getAttribute(XMLloader::neverReversibleID) );
+
+	if( element->hasAttribute( XMLloader::reverseWithID ) )
+		loadAttributeReverewWith( element->getAttribute(XMLloader::reverseWithID) );
+
+//	BOOST_FOREACH( rw::common::DOMElem::Ptr attribute, element->getAttributes() )
+//	{
+//		if (attribute->isName(XMLloader::neverReversibleID))
+//			loadAttributeReverewWith(attribute);
+//		else if (attribute->isName(XMLloader::reverseWithID))
+//			loadAttributeReversible(attribute);
+//	}
+}
+
+void XMLloader::loadAttributeReversible(rw::common::DOMElem::Ptr attribute)
+{
+	assert(attribute->getName() == XMLloader::neverReversibleID);
+	bool notReversible = attribute->getValueAsBool();
+	if(notReversible)
+	{
+		deb << " -neverReversible" << std::endl;
+		_builder.neverReversible();
+	}
+}
+
+void XMLloader::loadAttributeReverewWith(rw::common::DOMElem::Ptr attribute)
+{
+	assert(attribute->getName() == XMLloader::reverseWithID);
+	std::string reverseSeq = attribute->getValue();
+	_builder.reverseWith(reverseSeq);
+	deb << " -reverseWith( " << reverseSeq<< " )" << std::endl;
+}
+
+
+
+// **********************************
+// *** Sequence commands
+
+void XMLloader::loadMove(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::moveID);
+	std::string qArg = element->getValue();
+	_builder.move(_qMem.getObject(qArg));
+	deb << " loaded Move : " << qArg << std::endl;
+}
+
+void XMLloader::loadWait(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::waitID);
+	double time = element->getValueAsDouble();
+	_builder.wait(time);
+	deb << " loaded Wait : " << time << std::endl;
+}
+
+void XMLloader::loadGrasp(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::grapsID);
+	std::string arg = element->getValue();
+	deb << " loaded grasp : " << arg << std::endl;
+	if(arg == XMLloader::graspOpenID)
+		_builder.gripper_open();
+	else if(arg == XMLloader::graspCloseID)
+		_builder.gripper_close();
+	else
+		try
+		{
+			_builder.grasp(element->getValueAsInt());
+		}
+		catch(const std::exception & e)
+		{
+			std::cerr << "Invalid argument given for grasp" << std::endl;
+			std::cerr << " argument must be 'open', 'close' og an Integer" << std::endl;
+			std::cerr << e.what() << std::endl;
+			exit(-1);
+		}
+}
+
+void XMLloader::loadIO(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::ioID);
+	deb << " loaded IO : ";
+	try
+	{
+		IOPorts port = getPort(element->getChild(XMLloader::portID));
+		Switch value = getSwitch(element->getChild(XMLloader::switchID));
+		_builder.io(port,value);
+	}
+	catch(const std::exception & e)
+	{
+		std::cerr << "Invalid argument given for io" << std::endl;
+		std::cerr << " elements with names" << XMLloader::portID << " and " << XMLloader::switchID;
+		std::cerr << " must be present "<< std::endl;
+		std::cerr << e.what() << std::endl;
+		exit(-1);
+	}
+	deb << std::endl;
+}
+
+void XMLloader::loadPrint(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::printID);
+	std::string text = element->getValue();
+	_builder.print(text);
+	deb << " loaded Print : " << text << std::endl;
+}
+
+void XMLloader::loadForceMode(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::forceModeID);
+	deb << " loaded ForceMode :" << std::endl;
+	ForceModeArgument forward = getFMA( element->getChild(fmaForwardID) );
+	ForceModeArgument backward= getFMA( element->getChild(fmaBackwardID) );
+	deb << std::endl;
+	_builder.forceMode(forward,backward);
+}
+
+void XMLloader::loadAction(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::ioID);
+	std::cerr << "Action still not implemented in XML loader" << std::endl;
+	deb << " loaded Action : " << "" << std::endl;
+}
+
+
+// **********************************
+// *** Memory
+
+void XMLloader::loadQ(rw::common::DOMElem::Ptr element)
+{
+	rw::math::Q q = rw::loaders::DOMBasisTypes::readQ(element, true);
+	std::string name = element->getAttributeValue(nameID);
+	_qMem.saveObject(name,q);
+	deb << "loaded Q " << name << " : " << q << std::endl;
+}
+
+void XMLloader::loadIOPorts(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::ioPortID);
+	std::string name = element->getAttributeValue(nameID);
+	int port = element->getValueAsInt();
+	_iopMem.saveObject(name,port);
+	deb << "loaded IOPort " << name << " : " << port << std::endl;
+}
+
+dsl::IOPorts XMLloader::getPort(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::portID);
+	std::string name = element->getValue();
+	deb << name;
+	return 	_iopMem.getObject(name);
+}
+
+dsl::Switch  XMLloader::getSwitch(rw::common::DOMElem::Ptr element)
+{
+	assert(element->getName() == XMLloader::switchID);
+	std::string arg = element->getValue();
+	deb << " " << arg;
+	if(arg == XMLloader::switchOnID)
+		return Switch::on;
+	else if(arg == XMLloader::switchOffID)
+		return Switch::off;
+	else
+	{
+		std::cerr << "Invalid argument given for switch" << std::endl;
+		std::cerr << " argument must be 'on' or 'off'" << std::endl;
+		exit(-1);
+	}
+}
+
+dsl::ForceModeArgument XMLloader::getFMA(rw::common::DOMElem::Ptr element)
+{
+	std::string name = element->getName();
+	assert(name == XMLloader::fmaBackwardID || name == XMLloader::fmaForwardID);
+	std::string id = element->getValue();
+	deb << " " << id;
+	return ForceModeArgument::getArgument(id);
+}
+
+} /* namespace dsl */

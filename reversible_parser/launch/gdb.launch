@@ -1,0 +1,11 @@
+
+<launch>
+<node name="my_node_name"
+    pkg="reversible_demo" 
+    type="reversible_demo_node"
+    respawn="false" output="screen" 
+    launch-prefix="gdb -ex run --args">
+</node>
+</launch>
+
+

@@ -1,0 +1,145 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Jan 23, 2017
+ *      Author: josl
+ */
+
+/*#include <ast/AST2Graphviz.h>
+#include <ast/ASTNode.h>
+#include <ast/GraphvizPrinter.h>
+#include <D7pcCodeGenneration.h>
+#include <D7pcInterpretation.h>
+#include <D7pcParser.h>
+#include <D7pcTokenType.h>
+#include <File23.h>
+#include <lexer/RegexLexer.h>
+#include <lexer/TokenBuffer.h>
+#include <model/controller/ControlUnit.h>
+#include <model/graphviz/GraphPrint.hpp>
+#include <model/graphviz/GraphRepresentation.hpp>
+#include <model/Instruction.h>
+#include <parser/ParseResult.h>
+#include <ros/package.h>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
+*/
+
+int main(int argc, char **argv)
+{
+/*
+	using namespace edsl;
+	using namespace edsl::lexer;
+
+	std::cout << "program start" << std::endl;
+
+	std::cout << "### File read ###" << std::endl;
+	std::string filepath = ros::package::getPath("reversible_demo") + "/src/";
+	std::string filename = "edsl.txt";
+	File23 file(filepath, filename);
+	std::string input = file.readFile();
+
+	std::cout << "### LEXING ###" << std::endl;
+	RegexLexer lexer;
+	lexer.consumeFile(input, D7pcTokenType::getTokenList());
+	lexer::TokenBuffer tokenbuffer(lexer.tokenStream, true);
+	lexer.to_screen();
+
+	std::cout << "### PARSING ###" << std::endl;
+	parser::ParseResult result = D7pcParser::parse(tokenbuffer);
+
+	std::cout << "### ABSTRACT SYNTAX TREE ###" << std::endl;
+	std::shared_ptr<abstract_syntax_tree::GraphvizPrinter> graphdot = std::make_shared<abstract_syntax_tree::GraphvizPrinter>();
+	abstract_syntax_tree::AST2Graphviz::print(graphdot, result.getActionResult());
+	graphdot.reset();
+
+
+	std::cout << "### CODE GENNERATION ###" << std::endl;
+	D7pcCodeGenneration code_genneration(result.getActionResult());
+
+
+	std::cout << "### USEING CODEGEN ###" << std::endl;
+//	edsl::D7pcString2Variable vars;
+//	std::cout << "Use code test: " << vars.toQ("wc.qInspectOuterShell") << std::endl;
+
+	std::cout << "### INTERPRETATION ###" << std::endl;
+	D7pcInterpretation interpreter;
+	auto instruction_root = interpreter.interprete(result.getActionResult());
+
+	std::cout << "### MODEL PRINT ###" << std::endl;
+	dsl::common::GraphRepresentation graph123(instruction_root);
+	dsl::common::GraphPrint graphprint(graph123);
+
+	std::cout << "### MODEL EXECUTION ###" << std::endl;
+	model::ControlUnit control(instruction_root);
+	control.execute();
+
+	std::cout << "program end" << std::endl;
+	return 0;
+
+//	std::shared_ptr<model::ControlUnit> a;
+//	std::shared_ptr<model::ControlUnit> c;
+//	std::shared_ptr<std::shared_ptr<model::ControlUnit> >b;
+//	b->get() = c;
+//	b->swap(c);
+*/
+}
+
+
+
+//variables_move.getRef(name)->get_endQ();
+//iiwa->getQ();
+//wc.qPinHole[pinI][pinJ];
+//wc.qPinHoleAbove[pinI][pinJ];
+
+//	 wc.outershellFrame;
+//	 wc.outershellDetachFrame;
+//	 wc.outershellGraspFrame;
+//	 wc.outershellAssemblyFrame;
+//	 wc.outershellAssemblyRetractedFrame;
+//	 wc.outershellAltColModelFrame;
+//	 wc.outershellAltDetachFrame;
+//	 wc.innerStructureFrame;
+//	 wc.innerStructureDetachFrame;
+//	 wc.innerStructureGraspFrame;
+//	 wc.innerStructureAssemblyFrame;
+//	 wc.innerStructureAssemblyRetractedFrame;
+//	 wc.innerStructureFixedPickTcpFrame;
+//	 wc.innerStructureFixedPickRetractedTcpFrame;
+//	 wc.innerStructureAltColModelFrame;
+//	 wc.innerStructureAltDetachFrame;
+//	 wc.thermoelementFrame;
+//	 wc.thermoelementDetachFrame;
+//	 wc.thermoelementGraspFrame;
+//	 wc.thermoelementAssemblyFrame;
+//	 wc.thermoelementAssemblyRetractedFrame;
+//	 wc.pinFrame;
+//	 wc.pinDetachFrame;
+//	 wc.pinGraspFrame;
+//	 wc.pinAssemblyFrame;
+//	 wc.pinAssemblyRetractedFrame;
+//	 wc.springFrame;
+//	 wc.springDetachFrame;
+//	 wc.springGraspFrame;
+//	 wc.springAssemblyFrame;
+//	 wc.springAssemblyRetractedFrame;
+//	 wc.screwPartFrame;
+//	 wc.screwPartDetachFrame;
+//	 wc.screwPartGraspFrame;
+//	 wc.screwPartAssemblyFrame;
+//	 wc.screwPartAssemblyRotatedFrame;
+//	 wc.screwPartAssemblyRetractedFrame;
+
+//	wc.qInspectPin;
+//	wc.qDispenser;
+//	wc.qZero;
+//	wc.qAssemblySpringIntermediet;
+//	wc.qSpringPickInit;
+//	wc.qSpringPickPath1;
+//	wc.qSpringPickPath2;
+//	wc.qThermoelementPickInit;
+//	wc.qThermoelementPath2;
+//	wc.qThermoelementEnd;
+//	wc.qPickRetractedInnerstrucutre;

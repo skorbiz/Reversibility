@@ -1,0 +1,63 @@
+prepare feeder : screwPart
+restart_point
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// PIN
+
+set grasp_type : pin
+set inspection_type : pin
+
+local state : state
+set state : state Q_IIWA
+set state : state wc.innerStructureAltColModelFrame wc.assemblyFrame
+
+wsg open
+
+pick pin : state
+
+set state: state wc.pinFrame wc.pinGraspFrame
+set state : state Q_IIWA
+
+moveq : wc.qPinHoleAbove wc.qInspectPin state
+
+
+inspection update
+
+local transform : toolTobject
+local transform : baseTtoolAssemblyRetracted
+local transform : baseTtoolAssembly
+
+set transform : toolTobject inspection.toolTobject
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.pinAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.pinAssemblyFrame state
+
+
+set state : state Q_IIWA
+local move : move4
+move in_reach : move4 baseTtoolAssemblyRetracted state
+
+set state : state move4
+move lin in_reach : baseTtoolAssembly state
+
+move : move4 baseTtoolAssemblyRetracted state
+set state : state wc.qInspectPin
+set state : state Q_IIWA
+
+
+move lin : baseTtoolAssemblyRetracted baseTtoolAssembly
+wsg open :
+move lin : baseTtoolAssembly baseTtoolAssemblyRetracted
+
+//Initialisation of reverse vars
+set state : state Q_IIWA
+set state : state wc.innerStructureAltColModelFrame wc.assemblyFrame
+set state: state wc.pinFrame wc.pinGraspFrame
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.pinAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.pinAssemblyFrame state
+delocal transform : baseTtoolAssemblyRetracted default
+delocal transform : baseTtoolAssembly default
+delocal transform : toolTobject inspection.default_toolTobject
+delocal state : state
+delocal move : move4
+
+set grasp_type : pin
+set inspection_type : pin

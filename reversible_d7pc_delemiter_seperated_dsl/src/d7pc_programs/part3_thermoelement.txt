@@ -1,0 +1,59 @@
+prepare feeder : screwPart
+restart_point
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// TERMO ELEMENT
+
+set grasp_type : thermoElement
+
+local state : state
+set state : state Q_IIWA 
+set state : state wc.innerStructureAltColModelFrame wc.assemblyFrame
+
+wsg open
+moveq : wc.qZero wc.qThermoelementPickInit state
+move ptp : wc.qThermoelementPickInit wc.qThermoelementPath2
+wsg close
+move ptp : wc.qThermoelementPath2 wc.qThermoelementEnd
+
+set state : state Q_IIWA
+set state : state wc.thermoelementFrame wc.thermoelementGraspFrame
+
+//moveq : wc.qThermoelementEnd wc.qAssemblySpringAbove state
+//set state : state Q_IIWA
+
+local transform : toolTobject
+local transform : baseTtoolAssemblyRetracted
+local transform : baseTtoolAssembly
+
+convert frame2frame : toolTobject wc.toolFrame  wc.thermoelementGraspFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.thermoelementAssemblyFrame state
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.thermoelementAssemblyRetractedFrame state
+
+local move : move1
+move in_reach : move1 baseTtoolAssemblyRetracted state
+
+set state : state move1
+move lin in_reach : baseTtoolAssembly state
+
+move : move1 baseTtoolAssemblyRetracted state
+set state : state wc.qThermoelementEnd
+set state : state Q_IIWA
+move lin : baseTtoolAssemblyRetracted baseTtoolAssembly
+wsg open :
+move lin : baseTtoolAssembly baseTtoolAssemblyRetracted
+
+
+//Initialisation of reverse vars
+set state : state Q_IIWA
+set state : state wc.innerStructureAltColModelFrame wc.assemblyFrame
+set state: state wc.thermoelementFrame wc.thermoelementGraspFrame
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.thermoelementAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.thermoelementAssemblyFrame state
+convert frame2frame : toolTobject wc.toolFrame  wc.thermoelementGraspFrame state
+delocal transform : baseTtoolAssemblyRetracted default
+delocal transform : baseTtoolAssembly default
+delocal transform : toolTobject default
+delocal state : state
+delocal move : move1
+
+set grasp_type : thermoElement

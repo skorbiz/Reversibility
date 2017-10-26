@@ -1,0 +1,72 @@
+prepare feeder : screwPart
+restart_point
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SCREWPART
+
+local state : state
+set state : state Q_IIWA
+set state : state wc.innerStructureAltColModelFrame wc.assemblyFrame
+
+set grasp_type : screwPart
+set vision_type : screwPart
+set inspection_type : screwPart
+
+moveq : wc.qDispenser wc.qDispenser state
+wsg open
+set state: state wc.screwPartFrame wc.screwPartDetachFrame
+pick feeder : state
+set state: state wc.screwPartFrame wc.screwPartGraspFrame
+set state : state Q_IIWA
+
+set state : state wc.qDispenser
+moveq : wc.qDispenser wc.qInspectScrewPart state
+set state : state wc.qInspectScrewPart
+
+prepare feeder backward: screwPart
+inspection update
+prepare feeder : screwPart
+//prepare feeder : outerShell
+
+local transform : toolTobject
+local transform : baseTtoolAssemblyRetracted
+local transform : baseTtoolAssembly
+local transform : baseTtoolAssemblyRotated
+set transform : toolTobject inspection.toolTobject
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.screwPartAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssemblyRotated toolTobject wc.screwPartAssemblyRotatedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.screwPartAssemblyFrame state
+
+set state : state Q_IIWA
+local move : move4
+move in_reach : move4 baseTtoolAssemblyRetracted state
+set state : state move4
+move lin in_reach : baseTtoolAssembly state
+move lin in_reach : baseTtoolAssemblyRotated state
+set state : state Q_IIWA
+move : move4 baseTtoolAssemblyRetracted state
+set state : state wc.qInspectScrewPart
+set state : state Q_IIWA
+
+move lin : baseTtoolAssemblyRetracted baseTtoolAssemblyRotated
+move lin : baseTtoolAssemblyRotated baseTtoolAssembly
+wsg open :
+move lin : baseTtoolAssembly baseTtoolAssemblyRetracted
+
+
+//Initialisation of reverse vars
+set state : state Q_IIWA
+set state : state wc.innerStructureAltColModelFrame wc.assemblyFrame
+set state: state wc.screwPartFrame wc.screwPartGraspFrame
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.screwPartAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssemblyRotated toolTobject wc.screwPartAssemblyRotatedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.screwPartAssemblyFrame state
+delocal transform : baseTtoolAssemblyRetracted default
+delocal transform : baseTtoolAssemblyRotated default
+delocal transform : baseTtoolAssembly default
+delocal transform : toolTobject inspection.default_toolTobject
+delocal state : state
+delocal move : move4
+
+set grasp_type : screwPart
+set vision_type : screwPart
+set inspection_type : screwPart

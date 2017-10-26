@@ -1,0 +1,11 @@
+
+sequence main
+	local string s = "my_string_1"
+	local string s = "my_string_error"
+	print(s)
+	s = "my_string_2"
+	print(s)
+	print("my_string_3")
+	delocal string s = "my_string_delocal"
+end
+

@@ -1,0 +1,22 @@
+//CODE GENERATION
+
+frames
+	test
+end
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// OUTERSHELL
+
+sequence main
+	local string s = "lalalprint text"
+	print(s)
+	s = "pewpew"
+	print(s)
+	print("abcdef")
+
+	prepare_feeder("outerShell")
+	restart_point()
+	local State state
+	state := Q_IIWA
+end
+

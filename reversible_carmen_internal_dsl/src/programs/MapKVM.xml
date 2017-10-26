@@ -1,0 +1,46 @@
+	<IOPort name="gripper_tube"> 0 </IOport>
+
+	<sequence name = "tube_grasp">
+	<io>
+		<port>gripper_tube</port>
+		<switch>on</switch> 
+	</io>
+	</sequence>
+
+	<sequence name = "tube_release">
+	<io>
+		<port>gripper_tube</port>
+		<switch>off</switch> 
+	</io>
+	</sequence>
+
+	<Q name = "pos_common"> 2.363989 -1.202826 1.375119 1.415757 1.552398 -0.761728 </Q>
+	<Q name = "pos_drop_at"> 2.0913 -1.278 1.4849 -1.822 -1.600 2.1096 </Q>
+	<Q name = "pos_drop_up"> 1.369 1.9475 -3.166 -2.232 1.9490 </Q>
+	
+	<Q name="pos_tube_take_at"> 2.61505198 -1.2303603 1.69783592 -2.0270512 -1.5772302 2.60829782 </Q>
+	<Q name="pos_tube_take_in"> 2.72028470 -1.2718833 1.75522851 -2.0429990 -1.5760090 2.71330547 </Q>
+	<Q name="pos_tube_take_above"> 2.71761059 -1.3337281 1.64773416 -1.8737214 -1.5764640 2.71158146 </Q>
+	
+	<sequence name = "drop_tube">
+		<move> pos_drop_at </move>
+		<call> tube_release </call>
+		<wait>1.0</grasp>
+		<move>pos_drop_up</move>
+	</sequence>	
+
+	<sequence name = "pick_tube" reverseWith="drop_tube">
+		<call> tube_release </call>
+		<wait>0.5</grasp>
+		<move>pos_tube_take_at</move>
+		<move>pos_tube_take_in</move>
+		<uncall> tube_release </uncall>
+		<wait>0.5</grasp>
+		<move>pos_tube_take_above</move>
+	</sequence>	
+	
+	<sequence name = "main" reverseWith="drop_tube">
+		<move>pos_common</move>
+		<call> pick_tube </call>
+		<move>pos_common</move>
+	</sequence>	

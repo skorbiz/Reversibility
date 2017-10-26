@@ -1,0 +1,4 @@
+1 ) Test launch file is updated
+2 ) Launch file : roslaunch my_pkg_name gdb.launch
+3 ) type
+	bt : functional backtracking func_1 -> func_2 -> func_3

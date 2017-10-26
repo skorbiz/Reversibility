@@ -1,0 +1,6 @@
+
+events
+	doorClosed D1CL
+	drawOpened D2OP
+
+end

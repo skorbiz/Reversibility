@@ -1,0 +1,65 @@
+prepare feeder : outerShell
+restart_point
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// OUTERSHELL
+
+local state : state
+set state : state Q_IIWA
+
+set grasp_type : outerShell
+set vision_type : outerShell
+set inspection_type : outerShell
+
+moveq : wc.qDispenser wc.qDispenser state
+wsg open
+set state: state wc.outershellFrame wc.outershellDetachFrame
+pick feeder : state
+set state: state wc.outershellFrame wc.outershellGraspFrame
+set state : state Q_IIWA
+
+set state : state wc.qDispenser
+moveq : wc.qDispenser wc.qInspectOuterShell state
+set state : state wc.qInspectOuterShell
+prepare feeder backward: outerShell
+inspection update
+prepare feeder : innerStructure
+
+local transform : toolTobject
+local transform : baseTtoolAssemblyRetracted
+local transform : baseTtoolAssembly
+set transform : toolTobject inspection.toolTobject
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.outershellAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.outershellAssemblyFrame state
+
+set state : state Q_IIWA
+local move : move4
+move in_reach : move4 baseTtoolAssemblyRetracted state
+set state : state move4
+move lin in_reach : baseTtoolAssembly state
+
+
+set state : state Q_IIWA
+move : move4 baseTtoolAssemblyRetracted state
+set state : state wc.qInspectOuterShell
+set state : state Q_IIWA
+
+move lin : baseTtoolAssemblyRetracted baseTtoolAssembly
+wsg open :
+move lin : baseTtoolAssembly baseTtoolAssemblyRetracted
+
+
+//Initialisation of reverse vars
+set state : state Q_IIWA
+set state: state wc.outershellFrame wc.outershellGraspFrame
+convert toBaseTtool : baseTtoolAssemblyRetracted toolTobject wc.outershellAssemblyRetractedFrame state
+convert toBaseTtool : baseTtoolAssembly toolTobject wc.outershellAssemblyFrame state
+delocal transform : baseTtoolAssemblyRetracted default
+delocal transform : baseTtoolAssembly default
+delocal transform : toolTobject inspection.default_toolTobject
+delocal state : state
+delocal move : move4
+
+
+set grasp_type : outerShell
+set vision_type : outerShell
+set inspection_type : outerShell
